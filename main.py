@@ -11,7 +11,7 @@ from ta.momentum import RSIIndicator
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
-# sidebar #
+
 
 option = st.sidebar.selectbox('Select one symbol', ( 'TCS', 'BTC-USD','ETH'))
 import datetime
@@ -24,9 +24,6 @@ if start_date < end_date:
 else:
     st.sidebar.error('Error: End date must fall after start date.')
 
-# Stock data #
-
-# Download data
 df = yf.download(option,start= start_date,end= end_date, progress=False)
 
 #data pridiction
@@ -73,7 +70,6 @@ st.area_chart(macd)
 st.write('Stock RSI ')
 st.line_chart(rsi)
 
-# Data of recent days
 st.write('Recent data ')
 st.dataframe(df.tail(10))
 from io import *
@@ -93,7 +89,7 @@ def get_table_download_link(df):
     out: href string
     """
     val = to_excel(df)
-    b64 = base64.b64encode(val)  # val looks like b'...'
-    return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="download.xlsx">Download excel file</a>' # decode b'abc' => abc
+    b64 = base64.b64encode(val) 
+    return f'<a href="data:application/octet-stream;base64,{b64.decode()}" download="download.xlsx">Download excel file</a>' 
 
 st.markdown(get_table_download_link(df), unsafe_allow_html=True)
